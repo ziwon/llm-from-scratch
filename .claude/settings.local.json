@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(just train-quick:*)",
+      "Bash(llm-train:*)"
+    ],
+    "deny": []
+  }
+}

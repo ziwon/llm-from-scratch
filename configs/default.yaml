@@ -1,0 +1,64 @@
+# Default configuration for LLM training
+
+model:
+  vocab_size: 50257  # GPT-2 vocab size
+  context_length: 128
+  embed_dim: 768
+  n_heads: 12
+  n_layers: 12
+  dropout: 0.1
+  bias: false
+
+data:
+  train_file: "data/processed/all_train.txt"
+  val_file: null  # Optional validation file
+  max_length: 32
+  stride: 4
+  cache_dir: "data/cache"
+
+training:
+  batch_size: 128
+  epochs: 100
+  learning_rate: 0.0004
+  weight_decay: 0.1
+  gradient_clip: 1.0
+  warmup_steps: 1000
+  save_interval: 10
+  eval_interval: 10
+  log_interval: 100
+  
+  # Advanced options
+  gradient_accumulation: 1
+  mixed_precision: false
+  compile_model: false  # PyTorch 2.0 compile
+
+optimizer:
+  type: "adamw"
+  betas: [0.9, 0.999]
+  eps: 0.00000001
+
+scheduler:
+  type: "cosine"  # Options: cosine, linear, constant
+  min_lr: 0.00001
+
+generation:
+  max_new_tokens: 100
+  temperature: 0.7
+  top_k: 50
+  top_p: 0.95
+  repetition_penalty: 1.0
+
+logging:
+  level: "INFO"
+  tensorboard: true
+  wandb: false
+  project_name: "llm-from-scratch"
+
+paths:
+  checkpoint_dir: "models/checkpoints"
+  log_dir: "logs"
+  tensorboard_dir: "logs/tensorboard"
+
+seed: 42
+device: "auto"  # auto, cuda, cpu
+num_workers: 4
