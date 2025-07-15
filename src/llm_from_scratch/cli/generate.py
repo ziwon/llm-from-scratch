@@ -5,7 +5,7 @@ from typing import Optional
 import torch
 from rich.prompt import Prompt
 
-from ..config import Config, GenerationConfig
+from ..config import Config, GenerationConfig, ModelConfig
 from ..core import GPTModel, TokenizerWrapper
 from ..generation import generate_text
 from ..utils import setup_logger, load_checkpoint
@@ -46,9 +46,11 @@ def generate(
     if 'config' in checkpoint:
         config_dict = checkpoint['config']
         if isinstance(config_dict, dict) and 'model' in config_dict:
-            model_config = config_dict['model']
+            model_config_dict = config_dict['model']
         else:
-            model_config = config_dict
+            model_config_dict = config_dict
+        # Convert dict to ModelConfig object
+        model_config = ModelConfig(**model_config_dict)
         console.print("Using config from checkpoint")
     elif config_file and config_file.exists():
         config = Config.from_yaml(str(config_file))

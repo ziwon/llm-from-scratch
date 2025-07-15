@@ -76,11 +76,11 @@ train-with-config config:
 
 # Interactive generation
 generate model:
-    llm-generate --model {{model}}
+    llm-generate {{model}} --interactive
 
 # Generate with prompt
 generate-prompt model prompt:
-    llm-generate --model {{model}} --prompt "{{prompt}}"
+    llm-generate {{model}} --prompt "{{prompt}}"
 
 # Start TensorBoard
 tensorboard:
