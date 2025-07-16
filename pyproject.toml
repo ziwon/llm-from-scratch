@@ -1,9 +1,34 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "llm-from-scratch"
 version = "0.1.0"
 description = "Building a Large Language Model from Scratch"
 readme = "README.md"
 requires-python = ">=3.11"
+keywords = ["LLM", "GPT", "Transformer", "Machine Learning", "NLP"]
+license = { text = "MIT" }
+
+authors = [
+  { name = "Aaron Yoon", email = "aaron.yoon@example.com" }
+]
+maintainers = [
+  { name = "Aaron Yoon", email = "aaron.yoon@example.com" }
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "torch>=2.7.0",
     "torchvision>=0.22.0",
@@ -18,7 +43,7 @@ dependencies = [
     "tensorboard>=2.14.0",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
@@ -36,35 +61,154 @@ experiment = [
 data = [
     "kaggle>=1.7.4.5",
 ]
+format = [
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+test = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+]
+lint = [
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+    "pyright>=1.1.390",
+]
 [project.scripts]
 llm-train = "llm_from_scratch.cli.train:app"
 llm-generate = "llm_from_scratch.cli.generate:app"
 llm-prepare = "llm_from_scratch.cli.prepare_data:app"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [tool.black]
-line-length = 88
-target-version = ['py311']
+line-length = 120
+target-version = ["py311"]
 
 [tool.ruff]
-line-length = 88
+exclude = [
+  ".git",
+  ".venv",
+  ".ruff_cache",
+  ".vscode",
+  "build",
+  "dist",
+  "node_modules",
+  "site-packages",
+  "data",
+  "models",
+  "logs",
+  "notebooks"
+]
+fix = true
 target-version = "py311"
-select = ["E", "F", "I", "N", "W", "B", "Q"]
-ignore = ["E501"]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  # Rule families
+  "ANN",   # flake8-annotations (not ready, require types for ALL args)
+  "ARG",   # Check for unused function arguments
+  "BLE",   # General catch of Exception
+  "C90",   # Check for functions with a high McCabe complexity
+  "COM",   # flake8-commas (conflict with line wrapper)
+  "CPY",   # Missing copyright notice at top of file
+  "EM",    # Format nice error messages
+  "ERA",   # Check for commented-out code
+  "FIX",   # Check for FIXME, TODO and other developer notes
+  "FURB",  # refurb (need preview mode, too many preview errors)
+  "G",     # validate logging format strings
+  "INP",   # Ban PEP-420 implicit namespace packages
+  "N",     # pep8-naming (many var/arg names are intended)
+  "NPY",   # NumPy-specific rules (TODO: enable this)
+  "PTH",   # Prefer pathlib over os.path
+  "S",     # flake8-bandit (TODO: enable this)
+  "SLF",   # Access "private" class members
+  "T20",   # Check for print/pprint
+  "TD",    # TODO tags related
+  
+  # Single rules
+  "B023",    # Function definition does not bind loop variable
+  "B028",    # No explicit stacklevel keyword argument found
+  "B904",    # Within an except clause, raise exceptions with ...
+  "C408",    # unnecessary-collection-call
+  "D102",    # Missing docstring in public module
+  "D105",    # Missing docstring in magic method
+  "D107",    # Missing docstring in __init__
+  "D205",    # 1 blank line required between summary line and description
+  "D212",    # Multi-line docstring summary should start at the first line
+  "DTZ003",  # TODO: fix this (issue #3791)
+  "E501",    # Line too long
+  "FA100",   # Disable flake8-future-annotations
+  "FBT001",  # Boolean-typed positional argument in function definition
+  "FBT002",  # Boolean default positional argument in function
+  "PD901",   # pandas-df-variable-name
+  "PERF203", # try-except-in-loop
+  "PERF401", # manual-list-comprehension
+  "PLR0911", # too many return statements
+  "PLR0912", # too many branches
+  "PLR0913", # too many arguments
+  "PLR0915", # too many statements
+  "PLR2004", # magic values in comparison
+  "PLW2901", # Outer for loop variable overwritten by inner assignment target
+  "PT013",   # pytest-incorrect-pytest-import
+  "SIM105",  # Use contextlib.suppress() instead of try-except-pass
+  "TRY003",  # Avoid specifying long messages outside the exception class
+  "TRY300",  # Checks for return statements in try blocks
+  "TRY301",  # Checks for raise statements within try blocks
+]
+pydocstyle.convention = "google"
+isort.required-imports = []
+isort.split-on-trailing-comma = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # Ignore unused imports in __init__.py files
+"tests/**" = ["ANN201", "D", "PLR0124", "S101"]  # Allow asserts in tests
+"notebooks/**" = ["D", "T201", "E402"]  # Relaxed rules for notebooks
 
 [tool.mypy]
 python_version = "3.11"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
 warn_return_any = true
 warn_unused_configs = true
+show_error_codes = true
+cache_dir = "~/.cache/mypy"
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["torch.*", "torchvision.*", "torchaudio.*", "tiktoken.*", "matplotlib.*"]
+ignore_missing_imports = true
+
+[tool.pyright]
+typeCheckingMode = "basic"
+reportPossiblyUnboundVariable = true
+reportUnboundVariable = true
+reportMissingImports = false
+reportMissingModuleSource = false
+reportInvalidTypeForm = false
+exclude = ["**/tests", "**/data", "**/models", "**/logs", "**/notebooks"]
+
+[tool.pytest]
+cache_dir = "~/.cache/pytest"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
-addopts = "-v --cov=llm_from_scratch --cov-report=html"
+addopts = "--durations=30 --quiet -r xXs --color=yes -p no:warnings --import-mode=importlib -v --cov=llm_from_scratch --cov-report=html"
 
 [tool.uv.sources]
 torch = [

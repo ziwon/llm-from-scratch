@@ -1,0 +1,141 @@
+repos:
+  # Linting and Formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.1
+    hooks:
+      - id: ruff
+        name: Ruff (linting)
+        language_version: python3
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+        name: Ruff (formatting)
+        language_version: python3
+
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        name: Black (formatting)
+        language_version: python3
+        args: [--line-length=88, --target-version=py311]
+
+  # Syntax Upgrades
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+      - id: pyupgrade
+        name: Upgrade syntax
+        language_version: python3
+        args: [--py311-plus]
+
+  # Static Type Checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.1
+    hooks:
+      - id: mypy
+        name: mypy
+        language_version: python3
+        additional_dependencies: [
+          torch,
+          numpy,
+          tiktoken,
+          pyyaml,
+          types-PyYAML,
+          types-requests,
+          tensorboard,
+          rich,
+          typer,
+          matplotlib,
+          tqdm
+        ]
+        args: [--no-incremental, --ignore-missing-imports]
+
+  # Security Checks
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        name: Detect secrets
+        args: [--baseline, .secrets.baseline]
+        exclude: |
+          (?x)^(
+            .*\.ipynb$|
+            .*\.pt$|
+            .*\.pth$|
+            .*\.bin$|
+            models/.*|
+            data/.*|
+            logs/.*
+          )$
+
+  # Jupyter Notebook Support
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.8.7
+    hooks:
+      - id: nbqa-black
+        name: Black (notebooks)
+        additional_dependencies: [black]
+        args: [--line-length=88]
+      - id: nbqa-ruff
+        name: Ruff (notebooks)
+        additional_dependencies: [ruff]
+        args: [--fix, --ignore=E402,F401]
+
+  # General File Formatting and Checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+      - id: check-added-large-files
+        name: Check for large files
+        args: [--maxkb=100000, --enforce-all]  # Allow larger files for ML models
+      - id: debug-statements
+        name: Check for debug statements
+      - id: check-symlinks
+        name: Check for broken symlinks
+      - id: end-of-file-fixer
+        name: Fix end of files
+        exclude: |
+          (?x)^(
+            .*\.pt$|
+            .*\.pth$|
+            .*\.bin$|
+            models/.*|
+            data/.*
+          )$
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+        exclude: |
+          (?x)^(
+            .*\.pt$|
+            .*\.pth$|
+            .*\.bin$|
+            models/.*|
+            data/.*
+          )$
+      - id: check-yaml
+        name: Check YAML files
+      - id: check-toml
+        name: Check TOML files
+      - id: check-json
+        name: Check JSON files
+        exclude: |
+          (?x)^(
+            .*\.ipynb$
+          )$
+
+  # Python-specific checks
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-check-blanket-noqa
+        name: Check blanket noqa
+      - id: python-check-mock-methods
+        name: Check mock methods
+      - id: python-no-log-warn
+        name: Check for log.warn usage
+      - id: python-use-type-annotations
+        name: Check for type annotations
+      - id: text-unicode-replacement-char
+        name: Check for unicode replacement chars
