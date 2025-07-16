@@ -75,11 +75,11 @@ repos:
       - id: nbqa-black
         name: Black (notebooks)
         additional_dependencies: [black]
-        args: [--line-length=88]
+        args: [--line-length=120]
       - id: nbqa-ruff
         name: Ruff (notebooks)
         additional_dependencies: [ruff]
-        args: [--fix, --ignore=E402,F401]
+        args: [--fix]
 
   # General File Formatting and Checks
   - repo: https://github.com/pre-commit/pre-commit-hooks

@@ -26,7 +26,7 @@ training:
   save_interval: 10
   eval_interval: 10
   log_interval: 100
-  
+
   # Advanced options
   gradient_accumulation: 1
   mixed_precision: false

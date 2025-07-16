@@ -34,7 +34,7 @@ This project uses `just` as the task runner. Key commands:
 - `just setup` - Setup development environment with uv
 - `just install-dev` - Install with development dependencies
 
-### Development Workflow  
+### Development Workflow
 - `just format` - Format code with black and ruff
 - `just lint` - Run linters (black, ruff, mypy)
 - `just test` - Run pytest tests

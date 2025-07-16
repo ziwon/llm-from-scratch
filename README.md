@@ -4,17 +4,49 @@ A GPT language model implementation built from scratch using PyTorch.
 
 ## Quick Start
 
-```bash
+```
 # Setup environment
 just setup
 
 # Prepare training data
-just prepare-data data/raw/your_text_file.txt
+just download-sample
+just combine-sample
 
 # Train the model
-just train
+just train-quick
+llm-train --epochs 5 --batch-size 32 --max-length 64 --log-interval 10
+Loading configuration from: configs/default.yaml
 
-# Generate text
+Configuration:
+  Device: cuda
+  Epochs: 5
+  Batch size: 32
+  Learning rate: 0.0004
+  Training data: data/processed/all_train.txt
+
+Initializing tokenizer...
+
+Creating model...
+  Total parameters: 162,223,104
+  Model size: 618.8 MB (fp32)
+
+Loading data...
+Loaded dataset from cache: data/cache/all_train_ml64_s4.pkl
+
+Initializing trainer...
+
+Starting training...
+==================================================
+[07/17/25 03:56:20] INFO     Starting training for 5 epochs
+                    INFO     Total steps: 55,820
+                    INFO     Device: cuda
+Epoch 1/5:   1%|                                | 83/11164 [00:10<22:23,  8.25it/s, loss=8.2145, lr=3.36e-05]
+Epoch 1/5:   7%|                                | 807/11164 [01:38<20:53,  8.26it/s, loss=4.4358, lr=3.23e-04]
+```
+
+## Generate text
+
+```
 just generate models/checkpoints/your_model.pt
 ```
 

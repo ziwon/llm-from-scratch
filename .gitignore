@@ -13,6 +13,8 @@ data/**/*.txt
 data/**/*.pkl
 data/**/*.json
 
+models/**/*.pt
+
 logs/**/events*
 *.log
 

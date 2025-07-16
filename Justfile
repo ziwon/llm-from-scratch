@@ -94,7 +94,7 @@ notebook:
 download-sample:
     # Download harry potter books
     @echo "Downloading Harry Potter books..."
-    @mkdir -p data/raw  
+    @mkdir -p data/raw
     @curl -L -o data/raw/harry-potter-books.zip https://www.kaggle.com/api/v1/datasets/download/shubhammaindola/harry-potter-books && \
         unzip data/raw/harry-potter-books.zip -d data/raw/ && \
         rm data/raw/harry-potter-books.zip
@@ -136,6 +136,22 @@ check-gpu:
 test-cuda:
     @python -c "import torch; print(f'PyTorch version: {torch.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}'); print(f'CUDA version: {torch.version.cuda}'); print(f'GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"None\"}'); x = torch.randn(2, 3).cuda(); y = torch.randn(3, 2).cuda(); z = torch.mm(x, y); print('CUDA test successful:', z.shape)"
 
+# Install pre-commit hooks
+pre-commit-install:
+    pre-commit install
+
+# Run pre-commit hooks on all files
+pre-commit-all:
+    pre-commit run --all-files
+
+# Run pre-commit hooks on staged files
+pre-commit-staged:
+    pre-commit run
+
+# Update pre-commit hook versions
+pre-commit-update:
+    pre-commit autoupdate
+
 # Run all checks before commit
 pre-commit: format lint test
     @echo "All checks passed!"
@@ -162,6 +178,8 @@ help:
     @echo "  just format         - Format code"
     @echo "  just lint           - Run linters"
     @echo "  just test           - Run tests"
+    @echo "  just pre-commit     - Run all checks before commit"
+    @echo "  just pre-commit-all - Run pre-commit hooks on all files"
     @echo "  just clean          - Clean generated files"
     @echo ""
     @echo "Training:"
