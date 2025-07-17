@@ -43,6 +43,7 @@ Starting training...
 Epoch 1/5:   1%|                                | 83/11164 [00:10<22:23,  8.25it/s, loss=8.2145, lr=3.36e-05]
 Epoch 1/5:   7%|                                | 807/11164 [01:38<20:53,  8.26it/s, loss=4.4358, lr=3.23e-04]
 
+# Generate text
 just generate models/checkpoints/final_model.pt
 llm-generate models/checkpoints/final_model.pt --interactive
 Loading model from: models/checkpoints/final_model.pt
