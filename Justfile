@@ -105,7 +105,8 @@ download-sample:
 combine-sample:
     @echo "Combining text files into data/raw/all.txt..."
     @mkdir -p data/raw
-    @cat data/raw/*.txt > data/raw/all.txt
+    @rm -f data/raw/all.txt
+    @cat data/raw/[0-9]*.txt > data/raw/all.txt
     @echo "Combined text files saved to data/raw/all.txt"
 
 # Quick train (small dataset, few epochs for testing)
