@@ -62,8 +62,6 @@ Dobby is a free houseelf and he can obey anyone he likes and Dobby will do whate
 streaming down his shriveled little face onto his jumper. “Okay then,” said Harry, and he and Ron both released the elves, who fell right around
 the dishy, who fell right in a hicorn, who had gone to his feet and was smiling in an expressionless eyes, who was looking very white
 
-Enter prompt: Dobby has
-
 Enter prompt: Dobby is free?
 
 Generating...
